@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Undangan Lamaran Rahmah &amp; Adhit</title>
+<meta property="og:title" content="Undangan Lamaran Rahmah & Adhit">
+<meta property="og:description" content="Minggu, 15 November 2026 · Nuujii Resto & Coffee, Bandung">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Homemade+Apple&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#F2B5A7;--moss:#6F7C4E;--peach:#F8D8C0;--ivory:#FBF6EC;--gold:#C9A24B;--text:#4A4036;--soft:#8a7d6e;
+--display:"Cormorant Garamond",Georgia,serif;--script:"Homemade Apple",cursive;--body:"Jost",system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#efe3d3;color:var(--text);font:300 .95rem/1.85 var(--body);-webkit-font-smoothing:antialiased}
+body.locked{overflow:hidden}
+.wrap{max-width:480px;margin:0 auto;background:var(--ivory);overflow:hidden;position:relative}
+section{padding:84px 32px;text-align:center;position:relative}
+h2{font:400 2.4rem/1.15 var(--display);color:var(--moss);margin-bottom:18px;letter-spacing:.06em;text-transform:uppercase}
+.small{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.rule{display:block;width:0;height:1px;background:var(--gold);margin:20px auto;transition:width 1.2s .2s}
+.in .rule,.go .rule{width:64px}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.page-transition{animation:fadeIn .4s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.scroll-top{
+  position:fixed;bottom:24px;right:24px;z-index:30;width:40px;height:40px;border-radius:50%;
+  background:var(--gold);color:var(--text);border:none;font-size:18px;cursor:pointer;opacity:0;pointer-events:none;
+  transition:opacity .2s,transform .2s;transform:translateY(10px);box-shadow:0 2px 8px rgba(0,0,0,0.25);
+}
+.scroll-top.visible{opacity:1;pointer-events:auto;transform:translateY(0);}
+@media (max-width:480px){
+  .wrap{max-width:100%;border-radius:0}
+  section{padding:60px 20px}
+  h2{font-size:1.8rem}
+  .hero{padding:90px 16px 80px}
+  .hero .name{font-size:3.6rem}
+  .footer{padding:50px 20px 56px}
+}
+@media (max-width:380px){
+  section{padding:48px 14px}
+  .hero .name{font-size:2.8rem}
+  .count div{min-width:54px}
+}
+/* ===== COVER ===== */
+#cover{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--text)}
+#cover .half{position:absolute;top:0;bottom:0;width:50.5%;background:linear-gradient(160deg,var(--peach),#f4c9b9);transition:transform 1.5s cubic-bezier(.77,0,.18,1)}
+#cover .l{left:0}#cover .r{right:0;background:linear-gradient(200deg,var(--peach),#f4c9b9)}
+#cover .half::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 2px,transparent 2px 14px)}
+#cover .box{position:relative;z-index:2;padding:24px;transition:opacity .6s,transform .9s}
+#cover svg.fr{position:absolute;inset:14px;width:calc(100% - 28px);height:calc(100% - 28px);z-index:3;pointer-events:none;transition:opacity .6s}
+#cover svg.fr rect{fill:none;stroke:var(--gold);stroke-width:1.2;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.6s .3s forwards}
+.seal{width:132px;height:132px;margin:20px auto;border-radius:50%;display:grid;place-items:center;position:relative;
+background:radial-gradient(circle at 35% 30%,#e8c36b,var(--gold) 55%,#a07e30);box-shadow:0 8px 24px rgba(120,90,30,.35);animation:pulse 3s ease-in-out infinite}
+.seal::before{content:"";position:absolute;inset:7px;border:1px dashed rgba(255,255,255,.7);border-radius:50%}
+.seal span{font:400 1.35rem var(--script);color:var(--ivory);text-shadow:0 1px 2px rgba(0,0,0,.25)}
+#cover h1{font:400 3rem/1.1 var(--display)}
+#cover .tamu{margin-top:6px;font-size:.85rem;color:var(--soft)}
+#cover .tamu b{display:block;font:500 1.25rem var(--display);color:var(--text)}
+.btn{display:inline-block;margin-top:26px;padding:12px 30px;background:var(--moss);color:var(--ivory);border:1px solid var(--moss);font:400 .78rem var(--body);letter-spacing:.2em;text-transform:uppercase;text-decoration:none;cursor:pointer;position:relative;overflow:hidden;transition:color .3s}
+.btn::before{content:"";position:absolute;inset:0;background:var(--ivory);transform:translateX(-101%);transition:transform .4s;z-index:-1}
+.btn:hover{color:var(--moss)}.btn:hover::before{transform:none}
+.btn.ghost{background:transparent;color:var(--moss)}.btn.ghost::before{background:var(--moss)}.btn.ghost:hover{color:var(--ivory)}
+#cover.opening .l{transform:translateX(-101%)}#cover.opening .r{transform:translateX(101%)}
+#cover.opening .box{opacity:0;transform:scale(1.25)}#cover.opening svg.fr{opacity:0}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes pulse{50%{transform:scale(1.06);box-shadow:0 12px 30px rgba(120,90,30,.45)}}
+/* ===== HERO ===== */
+.hero{padding:110px 24px 100px;min-height:100vh;display:flex;flex-direction:column;justify-content:center;background:radial-gradient(ellipse at 50% 20%,#fff 0,var(--ivory) 45%,var(--peach) 130%)}
+.hero .name{font:400 4.8rem/1.05 var(--display);color:var(--text);display:block}
+.hero .name i{font-style:normal;display:inline-block;opacity:0;transform:translateY(40px) rotate(6deg);filter:blur(6px)}
+.go .name i{animation:letter 1s cubic-bezier(.2,.8,.2,1) forwards}
+.hero .amp{font:400 2.2rem var(--script);color:var(--pink);display:block;margin:4px 0;opacity:0;transform:scale(.2) rotate(-30deg)}
+.go .amp{animation:pop 1.2s 1.3s cubic-bezier(.3,1.6,.5,1) forwards}
+.hero .date{font:400 1.2rem var(--display);letter-spacing:.35em;color:var(--moss);margin-top:12px;opacity:0}
+.go .date{animation:fade 1.2s 2.2s forwards}
+.hero .small{opacity:0}.go .small{animation:fade 1s .2s forwards}
+.hero .scroll{position:absolute;bottom:28px;left:50%;width:1px;height:46px;background:linear-gradient(var(--gold),transparent);transform-origin:top;animation:drip 2s infinite}
+.corner{position:absolute;width:210px;height:210px;pointer-events:none}
+.c1{top:0;left:0}.c2{top:0;right:0;transform:scaleX(-1)}.c3{bottom:0;right:0;transform:rotate(180deg)}.c4{bottom:0;left:0;transform:scaleY(-1)}
+.corner .stem{fill:none;stroke:var(--moss);stroke-width:2;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.go .corner .stem{animation:draw 3s .3s ease-out forwards}
+.corner .lf{fill:var(--moss);opacity:.8;transform-box:fill-box;transform-origin:0 50%;transform:scale(0)}
+.go .corner .lf{animation:grow .9s forwards}
+.corner .fl{transform-box:fill-box;transform-origin:center;transform:scale(0)}
+.go .corner .fl{animation:grow 1.2s cubic-bezier(.3,1.5,.5,1) forwards}
+.corner .sway{transform-origin:0 0;animation:sway 6s ease-in-out infinite alternate}
+@keyframes letter{to{opacity:1;transform:none;filter:none}}
+@keyframes pop{to{opacity:1;transform:none}}
+@keyframes fade{to{opacity:1}}
+@keyframes grow{to{transform:scale(1)}}
+@keyframes sway{to{transform:rotate(2.5deg)}}
+@keyframes drip{0%{transform:scaleY(0)}60%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+/* ===== REVEAL ===== */
+.rv{opacity:0;transform:translateY(30px);filter:blur(5px);transition:opacity 1s,transform 1s,filter 1s}
+.rv.in{opacity:1;transform:none;filter:none}
+.rv.d1{transition-delay:.2s}.rv.d2{transition-delay:.4s}.rv.d3{transition-delay:.6s}
+.pink{background:linear-gradient(var(--peach),#f6cdbf)}
+.pink::before,.pink::after{content:"";position:absolute;left:0;right:0;height:14px;background:radial-gradient(circle at 50% 0,var(--ivory) 10px,transparent 11px) 0 0/28px 14px repeat-x}
+.pink::before{top:-1px}
+.pink::after{bottom:-1px;background:radial-gradient(circle at 50% 100%,var(--ivory) 10px,transparent 11px) 0 0/28px 14px repeat-x}
+.couple{display:flex;flex-direction:column;gap:2px;align-items:center}
+.couple .n{font:400 1.8rem/1.3 var(--display)}
+.couple .and{font:400 1.6rem var(--script);color:var(--gold)}
+.card{position:relative;padding:34px 20px;margin-top:24px;background:rgba(255,255,255,.55);border:1px solid var(--gold);outline:1px solid rgba(201,162,75,.45);outline-offset:-8px}
+.card .big{font:400 1.7rem/1.3 var(--display);color:var(--moss)}
+.count{display:flex;justify-content:center;gap:10px;margin:24px 0 6px}
+.count div{min-width:66px;padding:12px 4px 8px;border:1px solid var(--gold);background:#fff8}
+.count b{display:block;font:500 1.8rem/1.1 var(--display);color:var(--moss)}
+.count b.bump{animation:bump .5s}
+.count span{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--soft)}
+@keyframes bump{40%{transform:translateY(-6px);opacity:.3}}
+.dc-title{font:400 1.5rem var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--text);margin-top:26px}
+.swatches{display:flex;flex-wrap:wrap;justify-content:center;gap:22px 4px;margin:22px 0 4px}
+.sw{width:25%;min-width:76px;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;transform:scale(.4) rotate(-40deg);transition:opacity .7s,transform .9s cubic-bezier(.3,1.5,.5,1)}
+.swatches.in .sw{opacity:1;transform:none}
+.sw i{display:block;width:56px;height:56px;background:var(--c);filter:drop-shadow(0 2px 3px rgba(74,64,54,.25));transition:transform .5s}
+.sw i{clip-path:var(--scallop)}
+.sw:hover i{transform:rotate(30deg) scale(1.12)}
+.sw span{font:400 .78rem var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--text)}
+@keyframes float{50%{transform:translateY(-7px)}}
+form{text-align:left;margin-top:22px}
+label{display:block;font-size:.8rem;color:var(--moss);margin:16px 0 4px}
+input,select,textarea{width:100%;padding:11px 12px;background:#fff9;border:1px solid var(--gold);font:300 .95rem var(--body);color:var(--text);border-radius:0;transition:box-shadow .3s}
+input:focus,select:focus,textarea:focus{outline:0;box-shadow:0 0 0 3px rgba(242,181,167,.6)}
+textarea{min-height:88px;resize:vertical}
+.err{color:#a4473a;font-size:.8rem;margin-top:10px;min-height:1.2em}
+form .btn{width:100%;text-align:center}
+.success{background:#eaf4ec;color:#2f5232;border:1px solid #b8d4bc;padding:14px 16px;border-radius:8px;margin-top:14px;text-align:center;display:none}
+footer{padding:70px 32px 76px;text-align:center;background:var(--moss);color:var(--ivory)}
+footer .n{font:400 2rem var(--script);margin-top:14px}
+/* kelopak jatuh */
+#petals{position:fixed;inset:0;z-index:20;pointer-events:none;overflow:hidden}
+.petal{position:absolute;top:-30px;border-radius:0 100% 0 100%;opacity:.8;animation:fall linear infinite}
+@keyframes fall{0%{transform:translate3d(0,-30px,0) rotate(0)}100%{transform:translate3d(var(--dx),110vh,0) rotate(540deg)}}
+@media (prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation-duration:.01s!important;animation-delay:0s!important;transition-duration:.01s!important;transition-delay:0s!important}
+ #petals{display:none}
+}
+</style>
+</head>
+<body class="locked">
+
+<div id="cover">
+  <div class="half l"></div><div class="half r"></div>
+  <svg class="fr" preserveAspectRatio="none"><rect x="0" y="0" width="100%" height="100%" pathLength="1"/></svg>
+  <div class="box page-transition">
+    <p class="small">Undangan Lamaran</p>
+    <div class="seal" aria-hidden="true"><span>R &amp; A</span></div>
+    <h1>Rahmah &amp; Adhit</h1>
+    <p class="tamu" id="tamu" hidden>Kepada Yth.<b id="namaTamu"></b></p>
+    <button class="btn" id="open" type="button">Buka Undangan</button>
+  </div>
+</div>
+<div id="petals" aria-hidden="true"></div>
+
+<div class="wrap page-transition">
+  <!-- HERO -->
+  <header class="hero" id="hero" style="text-align:center">
+    <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div>
+    <p class="small">Undangan Lamaran</p>
+    <i class="rule"></i>
+    <h1 style="font-weight:400"><span class="name" data-t="Rahmah"></span><span class="amp">&amp;</span><span class="name" data-t="Adhit" data-o="1.5"></span></h1>
+    <p class="date">15 · 11 · 2026</p>
+    <span class="scroll"></span>
+  </header>
+
+  <section id="pembuka">
+    <p class="rv">Dengan penuh rasa syukur, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan berbagi kebahagiaan di acara lamaran kami.</p>
+  </section>
+
+  <section class="pink" id="mempelai">
+    <h2 class="rv">Kami yang Berbahagia</h2>
+    <div class="couple">
+      <span class="n rv d1">Rahmah Siti Soleha Gumay</span>
+      <span class="and rv d2">&amp;</span>
+      <span class="n rv d3">Adhitya Ramdhani</span>
+    </div>
+  </section>
+
+  <section id="acara">
+    <h2 class="rv">Detail Acara</h2>
+    <div class="count rv d1" id="count" aria-live="off">
+      <div><b id="cd">0</b><span>Hari</span></div><div><b id="ch">0</b><span>Jam</span></div>
+      <div><b id="cm">0</b><span>Menit</span></div><div><b id="cs">0</b><span>Detik</span></div>
+    </div>
+    <p id="cdDone" hidden>Acara telah berlangsung.</p>
+    <div class="card rv d2">
+      <p class="small">Waktu</p>
+      <p class="big">Minggu, 15 November 2026</p>
+      <p>Pukul 09.00 WIB s.d. selesai</p>
+      <i class="rule"></i>
+      <p class="small">Tempat</p>
+      <p class="big">Nuujii Resto &amp; Coffee</p>
+      <p>Jln. Rancasawo Blk. H No.100,<br>Margasari, Kec. Buahbatu, Bandung</p>
+      <a class="btn ghost" href="https://maps.google.com/?q=Nuujii+Resto+%26+Coffee,+Bandung" target="_blank" rel="noopener">Buka Google Maps</a>
+    </div>
+  </section>
+
+  <section class="pink" id="dresscode">
+    <h2 class="rv">Dresscode</h2>
+    <p class="dc-title rv d1">Baju Keluarga &amp; Teman</p>
+    <div class="swatches" id="swatches"></div>
+  </section>
+
+  <section id="rsvp">
+    <h2 class="rv">Konfirmasi Kehadiran</h2>
+    <p class="rv d1">Mohon konfirmasi kehadiran Anda agar kami dapat mempersiapkan acara dengan baik.</p>
+    <form id="rsvpForm" class="rv d2" novalidate>
+      <label for="nama">Nama</label><input id="nama" autocomplete="name" required>
+      <label for="status">Konfirmasi</label><select id="status"><option>Hadir</option><option>Tidak hadir</option></select>
+      <label for="jumlah">Jumlah tamu</label><input id="jumlah" type="number" min="1" max="10" value="1">
+      <label for="ucapan">Ucapan (opsional)</label><textarea id="ucapan"></textarea>
+      <p class="err" id="err" role="alert"></p>
+      <button class="btn" type="submit">Kirim via WhatsApp</button>
+      <div class="success" id="rsvpSuccess" hidden>Terima kasih, konfirmasi telah dikirim.</div>
+    </form>
+  </section>
+
+  <footer>
+    <p class="rv">Merupakan kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terima kasih.</p>
+    <p class="n rv d1">Rahmah &amp; Adhit</p>
+  </footer>
+</div>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-hidden="true">↑</button>
+
+<script>
+const RSVP_WA = "628123456789";
+const EVENT = new Date("2026-11-15T09:00:00+07:00");
+const $ = id => document.getElementById(id);
+
+const to = new URLSearchParams(location.search).get("to");
+if (to) { $("namaTamu").textContent = to; $("tamu").hidden = false; }
+
+document.querySelectorAll(".name").forEach(n => {
+  const off = parseFloat(n.dataset.o || 0);
+  n.innerHTML = [...n.dataset.t].map((c, i) => `<i style="animation-delay:${(off + i * .12 + .4).toFixed(2)}s">${c}</i>`).join("");
+});
+
+const petals = (x, y, r) => [0,72,144,216,288].map(a => `<ellipse cx="${x}" cy="${y-11*r}" rx="${6*r}" ry="${11*r}" fill="#F2B5A7" stroke="#e79d8c" stroke-width=".5" transform="rotate(${a} ${x} ${y})"/>`).join("") + `<circle cx="${x}" cy="${y}" r="${4*r}" fill="#C9A24B"/>`;
+const leaf = (x, y, a, d) => `<g transform="translate(${x} ${y}) rotate(${a})"><ellipse class="lf" cx="14" rx="16" ry="6" style="animation-delay:${d}s"/></g>`;
+const flower = (x, y, r, d) => `<g class="fl" style="animation-delay:${d}s">${petals(x, y, r)}</g>`;
+const corner = `<svg viewBox="0 0 220 220" width="100%" height="100%"><g class="sway">
+<path class="stem" pathLength="1" d="M4 4 C58 12 104 48 124 108 C138 150 164 182 208 204"/>
+${leaf(30,10,35,1.2)}${leaf(60,26,-20,1.4)}${leaf(86,52,50,1.6)}${leaf(110,80,-15,1.8)}${leaf(126,112,70,2)}${leaf(142,150,10,2.2)}${leaf(168,180,55,2.4)}
+${flower(124,108,1.3,2.6)}${flower(58,24,.9,2.2)}${flower(176,184,.8,2.9)}
+</g></svg>`;
+document.querySelectorAll(".corner").forEach(c => c.innerHTML = corner);
+
+const pts = []; for (let k = 0; k < 96; k++) { const t = k / 96 * 2 * Math.PI, r = 48 + 2.6 * Math.cos(t * 20); pts.push(`${(50 + r * Math.cos(t)).toFixed(1)}% ${(50 + r * Math.sin(t)).toFixed(1)}%`); }
+document.documentElement.style.setProperty("--scallop", `polygon(${pts.join(",")})`);
+const WARNA = [["Broken White","#FDFBF7"],["Ivory","#F0E4C8"],["Soft Yellow","#EBD98C"],["Soft Blue","#C9D1DA"],["Soft Purple","#D2C8DC"],["Burgundy","#7A2E3F"],["Mahogany","#3E1A08"]];
+$("swatches").innerHTML = WARNA.map(([n, c], i) => `<div class="sw" style="transition-delay:${i * .12}s"><i style="--c:${c}"></i><span>${n}</span></div>`).join("");
+
+function startPetals() {
+  const box = $("petals"), cols = ["#F2B5A7","#F8D8C0","#f4c3b4"];
+  for (let i = 0; i < 16; i++) {
+    const p = document.createElement("i"), s = 9 + Math.random() * 10;
+    p.className = "petal";
+    p.style.cssText = `left:${Math.random()*100}%;width:${s}px;height:${s*1.2}px;background:${cols[i%3]};--dx:${(Math.random()*160-80).toFixed(0)}px;animation-duration:${8+Math.random()*8}s;animation-delay:${Math.random()*10}s`;
+    box.appendChild(p);
+  }
+}
+
+$("open").addEventListener("click", () => {
+  $("cover").classList.add("opening");
+  setTimeout(() => $("hero").classList.add("go"), 700);
+  setTimeout(() => { $("cover").remove(); document.body.classList.remove("locked"); startPetals(); }, 1600);
+});
+
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .2 });
+document.querySelectorAll(".rv,.rule,.swatches").forEach(el => io.observe(el));
+
+function setN(id, v) { const e = $(id); if (e.textContent != v) { e.textContent = v; e.classList.remove("bump"); void e.offsetWidth; e.classList.add("bump"); } }
+function tick() {
+  const d = EVENT - Date.now();
+  if (d <= 0) { $("count").hidden = true; $("cdDone").hidden = false; return; }
+  setN("cd", Math.floor(d / 864e5)); setN("ch", Math.floor(d % 864e5 / 36e5));
+  setN("cm", Math.floor(d % 36e5 / 6e4)); setN("cs", Math.floor(d % 6e4 / 1e3));
+}
+tick(); setInterval(tick, 1000);
+
+$("rsvpForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const nama = $("nama").value.trim();
+  if (!nama) { $("err").textContent = "Nama wajib diisi."; $("nama").focus(); return; }
+  if (!RSVP_WA) { $("err").textContent = "Nomor WhatsApp RSVP belum diatur."; return; }
+  $("err").textContent = "";
+  const u = $("ucapan").value.trim();
+  const msg = `Halo, saya ${nama}.\nKonfirmasi: ${$("status").value}\nJumlah tamu: ${$("jumlah").value}` + (u ? `\nUcapan: ${u}` : "") + `\n\n(Undangan lamaran Rahmah & Adhit, 15 November 2026)`;
+  window.open(`https://wa.me/${RSVP_WA}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+  $("rsvpForm").reset();
+  $("rsvpSuccess").hidden = false;
+  setTimeout(() => { $("rsvpSuccess").hidden = true; }, 5000);
+});
+
+window.addEventListener("scroll", () => {
+  document.getElementById("scrollTop").classList.toggle("visible", window.scrollY > 300);
+});
+</script>
+</body>
+</html>
