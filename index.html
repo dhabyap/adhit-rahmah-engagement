@@ -227,14 +227,14 @@ footer .n{font:400 2rem var(--script);margin-top:14px}
 
   <section id="rsvp">
     <h2 class="rv">RSVP</h2>
-    <p class="rv d1">Please confirm your attendance so we can prepare the event well.</p>
+    <p class="rv d1">Mohon konfirmasi kehadiran Anda agar kami dapat mempersiapkan acara dengan baik.</p>
     <form id="rsvpForm" class="rv d2" novalidate>
-      <label for="nama">Name</label><input id="nama" autocomplete="name" required>
-      <label for="status">RSVP</label><select id="status"><option>Attending</option><option>Not attending</option></select>
-      <label for="jumlah">Number of guests</label><input id="jumlah" type="number" min="1" max="10" value="1">
+      <label for="nama">Nama</label><input id="nama" autocomplete="name" required>
+      <label for="status">Konfirmasi</label><select id="status"><option>Hadir</option><option>Tidak hadir</option></select>
+      <label for="jumlah">Jumlah tamu</label><input id="jumlah" type="number" min="1" max="10" value="1">
       <label for="hp">Nomor HP (opsional, untuk konfirmasi)</label>
       <input id="hp" type="tel" inputmode="tel" placeholder="08…" autocomplete="tel">
-      <label for="ucapan">Greeting (optional)</label>
+      <label for="ucapan">Ucapan (opsional)</label>
       <textarea id="ucapan"></textarea>
       <p class="err" id="err" role="alert"></p>
       <button class="btn" type="submit" id="rsvpBtn"><span class="btn-txt">Send</span></button>
@@ -244,9 +244,9 @@ footer .n{font:400 2rem var(--script);margin-top:14px}
         <circle class="check-c" cx="26" cy="26" r="24"/>
         <path class="check-t" d="M14 27l8 8 16-16"/>
       </svg>
-      <h3>Thank you!</h3>
-      <p id="doneMsg">Your RSVP has been saved.</p>
-      <button class="btn ghost" id="rsvpAgain" type="button">Send another response</button>
+      <h3>Terima kasih!</h3>
+            <p id="doneMsg">Konfirmasi Anda telah tersimpan.</p>
+            <button class="btn ghost" id="rsvpAgain" type="button">Kirim respons lain</button>
     </div>
   </section>
 
@@ -320,10 +320,10 @@ tick(); setInterval(tick, 1000);
 $("rsvpForm").addEventListener("submit", async e => {
   e.preventDefault();
   const nama = $("nama").value.trim();
-  if (!nama) { $("err").textContent = "Name is required."; $("nama").focus(); return; }
+  if (!nama) { $("err").textContent = "Nama wajib diisi."; $("nama").focus(); return; }
   $("err").textContent = "";
 
-  const status = $("status").value === "Attending";
+  const status = $("status").value === "Hadir";
   const jumlah = Math.max(1, Math.min(20, parseInt($("jumlah").value,10)||1));
   const ucapan = $("ucapan").value.trim();
   const hp = $("hp").value.trim();
@@ -349,21 +349,21 @@ $("rsvpForm").addEventListener("submit", async e => {
   // 2) Fallback: WhatsApp
   if (!saved && RSVP_WA) {
     const msg =
-      `Hello, I am ${nama}\nAttendance: ${status ? "Attending" : "Not attending"}\nGuests: ${jumlah}` +
-      (ucapan ? `\nGreeting: ${ucapan}` : "") +
+      `Halo, saya ${nama}\nKonfirmasi: ${status ? "Hadir" : "Tidak hadir"}\nJumlah tamu: ${jumlah}` +
+      (ucapan ? `\nUcapan: ${ucapan}` : "") +
       (hp ? `\nHP: ${hp}` : "") +
-      `\n\n(Rahmah & Adhit Engagement, 15 November 2026)`;
+      `\n\n(Undangan lamaran Rahmah & Adhit, 15 November 2026)`;
     window.open(`https://wa.me/${RSVP_WA}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
   }
-  if (!saved && !RSVP_WA) { $("err").textContent = "Could not send your RSVP. Please try again."; btn.classList.remove("loading"); return; }
+  if (!saved && !RSVP_WA) { $("err").textContent = "RSVP tidak terkirim. Silakan coba lagi."; btn.classList.remove("loading"); return; }
 
   btn.classList.remove("loading");
 
   // Tampilkan panel konfirmasi
   $("rsvpForm").reset();
   $("doneMsg").textContent = saved
-    ? "Your RSVP has been saved. We will see you there!"
-    : "Your RSVP was sent via WhatsApp. Thank you!";
+      ? "Konfirmasi Anda telah tersimpan. Kami tunggu kehadiran Bapak/Ibu!"
+      : "Konfirmasi dikirim via WhatsApp. Terima kasih!";
   $("rsvpForm").classList.add("done-hide");
   $("rsvpDone").hidden = false;
   $("rsvpDone").scrollIntoView({ behavior: "smooth", block: "center" });
