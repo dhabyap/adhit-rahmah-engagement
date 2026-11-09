@@ -3,7 +3,9 @@ const TOKEN = "RA-ADMIT-2026";
 const HOURS = 12;
 
 function doPost(e) {
-  const lock = LockService.getScriptLock(); lock.enterBusy();
+  var lock;
+  try { lock = LockService.getScriptLock(); } catch (_) { lock = null; }
+  if (lock) lock.enterBusy();
   try {
     let b;
   try { b = JSON.parse(e.postData.contents); } catch (_) { b = null; }
@@ -26,13 +28,15 @@ function doPost(e) {
     return json({ ok: true });
   } catch (err) {
     return json({ ok:false, error: String(err) });
-  } finally { lock.leave(); }
+  } finally { if (lock) lock.leave(); }
 }
 
 function doGet(e) {
-  const lock = LockService.getScriptLock(); lock.enterBusy();
+  var lock;
+  try { lock = LockService.getScriptLock(); } catch (_) { lock = null; }
+  if (lock) lock.enterBusy();
   try {
-    if (e.parameter && e.parameter.token !== TOKEN)
+    if ((e.parameter && e.parameter.key) !== TOKEN)
       return json({ error: "bad token" });
     const ss = SpreadsheetApp.getActiveSpreadsheet();
     const sh = ss.getSheetByName(SHEET) || ss.getSheets()[0];
@@ -52,7 +56,7 @@ function doGet(e) {
     return json({ ok: true, rows: out });
   } catch (err) {
     return json({ ok:false, error: String(err) });
-  } finally { lock.leave(); }
+  } finally { if (lock) lock.leave(); }
 }
 
 function json(o) {
