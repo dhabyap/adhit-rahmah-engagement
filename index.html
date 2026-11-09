@@ -160,6 +160,24 @@ footer .n{font:400 2rem var(--script);margin-top:14px}
  *,*::before,*::after{animation-duration:.01s!important;animation-delay:0s!important;transition-duration:.01s!important;transition-delay:0s!important}
  #petals{display:none}
 }
+
+.guestlist{display:grid;gap:12px;margin:18px auto 8px;max-width:620px}
+.guest-card{padding:16px 19px;background:#fffdf8;border-left:2px solid var(--gold);text-align:left;animation:guest-in .4s ease both}
+.guest-name{font:400 1.05rem var(--display);color:var(--moss);margin-bottom:5px}
+.guest-greeting{font-size:.9rem;color:var(--text);line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
+.guest-empty{color:#8a7d6e;font-size:.85rem;font-style:italic;text-align:center;padding:16px 0}
+.guest-consent{display:flex;align-items:flex-start;gap:8px;margin:12px 0 0;font-size:.72rem;color:#6a5f52;line-height:1.45}
+.guest-consent input{width:16px;min-width:16px;height:16px;margin:3px 0 0;accent-color:var(--moss)}
+.guest-consent span{display:inline}
+.guest-status{font-size:.72rem;color:#8a7d6e;text-align:center;margin-top:10px}
+.guest-error{color:#a4473a;font-size:.75rem;text-align:center;margin-top:8px}
+.guest-refresh{display:block;margin:12px auto 0;background:none;border:0;color:#8a7d6e;text-decoration:underline;cursor:pointer;font-size:.7rem}
+.guest-card[hidden],.guestlist[hidden]{display:none!important}
+#guestlist{padding-top:50px;padding-bottom:50px}
+@keyframes guest-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(max-width:480px){.guest-card{padding:14px 15px}}
+@media(prefers-reduced-motion:reduce){.guest-card{animation:none}}
+
 </style>
 </head>
 <body class="locked">
@@ -225,6 +243,14 @@ footer .n{font:400 2rem var(--script);margin-top:14px}
     <div class="swatches" id="swatches"></div>
   </section>
 
+  <section id="guestlist">
+    <h2 class="rv">Ucapan Terbaru</h2>
+    <div id="guestStatus" class="guest-status" aria-live="polite"></div>
+    <div id="guestContainer" class="guestlist" aria-live="polite"></div>
+    <button id="guestRefresh" class="guest-refresh" type="button">Muat ucapan lain</button>
+    <p class="guest-privacy">Hanya nama dan ucapan yang boleh ditampilkan sesuai persetujuan pengirim.</p>
+  </section>
+
   <section id="rsvp">
     <h2 class="rv">RSVP</h2>
     <p class="rv d1">Mohon konfirmasi kehadiran Anda agar kami dapat mempersiapkan acara dengan baik.</p>
@@ -236,6 +262,7 @@ footer .n{font:400 2rem var(--script);margin-top:14px}
       <input id="hp" type="tel" inputmode="tel" placeholder="08…" autocomplete="tel">
       <label for="ucapan">Ucapan (opsional)</label>
       <textarea id="ucapan"></textarea>
+      <label class="guest-consent"><input id="showGreeting" type="checkbox"><span>Nama dan ucapan saya boleh ditampilkan di undangan publik.</span></label>
       <p class="err" id="err" role="alert"></p>
       <button class="btn" type="submit" id="rsvpBtn"><span class="btn-txt">Send</span></button>
     </form>
@@ -339,7 +366,7 @@ $("rsvpForm").addEventListener("submit", async e => {
       const r = await fetch(RSVP_API, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ nama, hadir: status ? "yes" : "no", jumlah, ucapan, hp }),
+        body: JSON.stringify({ nama, hadir: status ? "yes" : "no", jumlah, ucapan, hp, tampilPublik: $("showGreeting").checked }),
       });
       const j = await r.json();
       if (j && j.ok) saved = true;
@@ -375,6 +402,33 @@ $("rsvpAgain").addEventListener("click", () => {
   $("err").textContent = "";
   $("nama").focus();
 });
+
+const GUEST_API = RSVP_API + "?public=1";
+function escapeText(value) {
+  const el = document.createElement("span");
+  el.textContent = value || "";
+  return el.innerHTML;
+}
+async function loadGuestMessages() {
+  const container = $("guestContainer");
+  $("guestStatus").textContent = "Memuat ucapan…";
+  try {
+    const res = await fetch(GUEST_API, { cache: "no-store" });
+    const data = await res.json();
+    const rows = Array.isArray(data.rows) ? data.rows : [];
+    if (!rows.length) {
+      container.innerHTML = '<p class="guest-empty">Belum ada ucapan yang dibagikan.</p>';
+    } else {
+      container.innerHTML = rows.map(row => `<article class="guest-card"><h3 class="guest-name">${escapeText(row.nama)}</h3><p class="guest-greeting">${escapeText(row.ucapan)}</p></article>`).join("");
+    }
+    $("guestStatus").textContent = "";
+  } catch (_) {
+    $("guestStatus").textContent = "Ucapan belum dapat dimuat. Coba lagi sebentar.";
+  }
+}
+$("guestRefresh").addEventListener("click", loadGuestMessages);
+loadGuestMessages();
+setInterval(loadGuestMessages, 60000);
 
 window.addEventListener("scroll", () => {
   document.getElementById("scrollTop").classList.toggle("visible", window.scrollY > 300);
