@@ -214,16 +214,20 @@ footer .n{font:400 2rem var(--script);margin-top:14px}
       <label for="nama">Name</label><input id="nama" autocomplete="name" required>
       <label for="status">RSVP</label><select id="status"><option>Attending</option><option>Not attending</option></select>
       <label for="jumlah">Number of guests</label><input id="jumlah" type="number" min="1" max="10" value="1">
-      <label for="ucapan">Greeting (optional)</label><textarea id="ucapan"></textarea>
+      <label for="hp">Nomor HP (opsional, untuk konfirmasi)</label>
+      <input id="hp" type="tel" inputmode="tel" placeholder="08…" autocomplete="tel">
+      <label for="ucapan">Greeting (optional)</label>
+      <textarea id="ucapan"></textarea>
       <p class="err" id="err" role="alert"></p>
-      <button class="btn" type="submit">Send via WhatsApp</button>
-      <div class="success" id="rsvpSuccess" hidden>Thank you, your confirmation has been sent.</div>
+      <button class="btn" type="submit">Send</button>
+      <div class="success" id="rsvpSuccess" hidden>Thank you, your RSVP has been saved.</div>
     </form>
   </section>
 
   <footer>
     <p class="rv">It would be an honour and joy to have you with us. Thank you.</p>
     <p class="n rv d1">Rahmah &amp; Adhit</p>
+    <p style="margin-top:26px;font-size:.68rem;opacity:.45"><a href="admin.html" style="color:inherit;text-decoration:underline">Host panel</a></p>
   </footer>
 </div>
 
@@ -231,6 +235,9 @@ footer .n{font:400 2rem var(--script);margin-top:14px}
 
 <script>
 const RSVP_WA = "628123456789";
+// Ganti setelah deploy Apps Script ke Google Sheets. Kosongkan "" untuk pakai WA saja.
+const RSVP_API = "";
+const RSVP_TOKEN = "RA-ADMIT-2026"; // untuk admin.html
 const EVENT = new Date("2026-11-15T09:00:00+07:00");
 const $ = id => document.getElementById(id);
 
@@ -285,18 +292,51 @@ function tick() {
 }
 tick(); setInterval(tick, 1000);
 
-$("rsvpForm").addEventListener("submit", e => {
+$("rsvpForm").addEventListener("submit", async e => {
   e.preventDefault();
   const nama = $("nama").value.trim();
   if (!nama) { $("err").textContent = "Name is required."; $("nama").focus(); return; }
-  if (!RSVP_WA) { $("err").textContent = "WhatsApp contact not set."; return; }
   $("err").textContent = "";
-  const u = $("ucapan").value.trim();
-  const msg = `Hello, I am ${nama}.\nAttendance: ${$("status").value}\nGuests: ${$("jumlah").value}` + (u ? `\nGreeting: ${u}` : "") + `\n\n(Rahmah & Adhit Engagement, 15 November 2026)`;
-  window.open(`https://wa.me/${RSVP_WA}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
-  $("rsvpForm").reset();
-  $("rsvpSuccess").hidden = false;
-  setTimeout(() => { $("rsvpSuccess").hidden = true; }, 5000);
+
+  const status = $("status").value === "Attending";
+  const jumlah = Math.max(1, Math.min(20, parseInt($("jumlah").value,10)||1));
+  const ucapan = $("ucapan").value.trim();
+  const hp = $("hp").value.trim();
+
+  // 1) Coba POST ke Google Sheets
+  if (RSVP_API) {
+    try {
+      const r = await fetch(RSVP_API, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ nama, hadir: status ? "yes" : "no", jumlah, ucapan, hp }),
+      });
+      const j = await r.json();
+      if (j && j.ok) {
+        $("rsvpForm").reset();
+        $("rsvpSuccess").hidden = false;
+        setTimeout(() => { $("rsvpSuccess").hidden = true; }, 6000);
+        return;
+      }
+      $("err").textContent = "Server error, opening WhatsApp as backup.";
+    } catch (_) {
+      $("err").textContent = "Network error, opening WhatsApp as backup.";
+    }
+  }
+
+  // 2) Fallback: WhatsApp
+  if (!RSVP_WA) { $("err").textContent = "No contact configured."; return; }
+  const msg =
+    `Hello, I am ${nama}.\nAttendance: ${status ? "Attending" : "Not attending"}\nGuests: ${jumlah}` +
+    (ucapan ? `\nGreeting: ${ucapan}` : "") +
+    (hp ? `\nHP: ${hp}` : "") +
+    `\n\n(Rahmah & Adhit Engagement, 15 November 2026)`;
+  setTimeout(() => {
+    window.open(`https://wa.me/${RSVP_WA}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+    $("rsvpForm").reset();
+    $("rsvpSuccess").hidden = false;
+    setTimeout(() => { $("rsvpSuccess").hidden = true; }, 6000);
+  }, 800);
 });
 
 window.addEventListener("scroll", () => {
