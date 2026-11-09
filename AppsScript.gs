@@ -37,11 +37,9 @@ function doPost(e) {
       Math.max(1, Math.min(20, parseInt(body.jumlah || 1, 10) || 1)),
       String(body.ucapan || "").slice(0, 500),
       String(body.hp || "").trim(),
-      new Date(),
-      body.tampilPublik === true
+      new Date()
     ];
-    if (sh.getLastColumn() < 7) sh.getRange(1, 7).setValue("Tampil publik?").setFontWeight("bold");
-    sh.getRange(sh.getLastRow() + 1, 1, 1, row.length).setValues([row]);
+    sh.appendRow(row);
     return json({ ok: true });
   } catch (err) {
     return json({ ok: false, error: String(err) });
@@ -52,26 +50,6 @@ function doPost(e) {
 
 function doGet(e) {
   var p = (e && e.parameter) ? e.parameter : {};
-
-  // Public guestbook: expose only display name + greeting, never phone or guest count.
-  if (p.public === "1") {
-    try {
-      var publicSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET);
-      if (!publicSheet || publicSheet.getLastRow() < 2) return json({ ok: true, rows: [] });
-      var publicValues = publicSheet.getRange(2, 1, publicSheet.getLastRow() - 1, Math.max(7, publicSheet.getLastColumn())).getDisplayValues();
-      var publicRows = publicValues
-        .filter(function(r) { return r[1] === "TRUE" && r[6] === "TRUE" && String(r[3] || "").trim(); })
-        .map(function(r) { return { nama: r[0], ucapan: r[3] }; });
-      for (var i = publicRows.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = publicRows[i]; publicRows[i] = publicRows[j]; publicRows[j] = temp;
-      }
-      return json({ ok: true, rows: publicRows.slice(0, 5) });
-    } catch (err) {
-      return json({ ok: false, rows: [] });
-    }
-  }
-
   if (p.key !== TOKEN) return json({ error: "bad token" });
 
   var lock = null;
