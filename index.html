@@ -131,7 +131,25 @@ input:focus,select:focus,textarea:focus{outline:0;box-shadow:0 0 0 3px rgba(242,
 textarea{min-height:88px;resize:vertical}
 .err{color:#a4473a;font-size:.8rem;margin-top:10px;min-height:1.2em}
 form .btn{width:100%;text-align:center}
-.success{background:#eaf4ec;color:#2f5232;border:1px solid #b8d4bc;padding:14px 16px;border-radius:8px;margin-top:14px;text-align:center;display:none}
+.btn.loading{pointer-events:none;opacity:.75}
+.btn.loading .btn-txt{visibility:hidden}
+.btn.loading::after{content:"";position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+form.done-hide input, form.done-hide select, form.done-hide textarea, form.done-hide .btn, form.done-hide .err{display:none}
+.done{margin-top:26px;text-align:center;background:#fff;border:1px solid var(--gold);padding:36px 24px;border-radius:12px;animation:pop .45s cubic-bezier(.2,.9,.3,1.2)}
+.done[hidden]{display:none}
+.done h3{font:400 1.5rem var(--display);color:var(--moss);letter-spacing:.06em;margin-bottom:6px}
+.done p{font-size:.85rem;color:#6a5f52;margin-bottom:18px}
+.check{width:56px;height:56px;margin-bottom:14px}
+.check-c{fill:none;stroke:var(--moss);stroke-width:2;stroke-dasharray:150;stroke-dashoffset:150;animation:draw .6s .15s ease forwards}
+.check-t{fill:none;stroke:var(--moss);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40;animation:draw .35s .6s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes pop{from{opacity:0;transform:scale(.94) translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){
+  .check-c,.check-t{animation:none;stroke-dashoffset:0}
+  .done{animation:none}
+  .btn.loading::after{animation:none}
+}
 footer{padding:70px 32px 76px;text-align:center;background:var(--moss);color:var(--ivory)}
 footer .n{font:400 2rem var(--script);margin-top:14px}
 /* kelopak jatuh */
@@ -219,9 +237,17 @@ footer .n{font:400 2rem var(--script);margin-top:14px}
       <label for="ucapan">Greeting (optional)</label>
       <textarea id="ucapan"></textarea>
       <p class="err" id="err" role="alert"></p>
-      <button class="btn" type="submit">Send</button>
-      <div class="success" id="rsvpSuccess" hidden>Thank you, your RSVP has been saved.</div>
+      <button class="btn" type="submit" id="rsvpBtn"><span class="btn-txt">Send</span></button>
     </form>
+    <div class="done" id="rsvpDone" hidden>
+      <svg class="check" viewBox="0 0 52 52" aria-hidden="true">
+        <circle class="check-c" cx="26" cy="26" r="24"/>
+        <path class="check-t" d="M14 27l8 8 16-16"/>
+      </svg>
+      <h3>Thank you!</h3>
+      <p id="doneMsg">Your RSVP has been saved.</p>
+      <button class="btn ghost" id="rsvpAgain" type="button">Send another response</button>
+    </div>
   </section>
 
   <footer>
@@ -302,6 +328,11 @@ $("rsvpForm").addEventListener("submit", async e => {
   const ucapan = $("ucapan").value.trim();
   const hp = $("hp").value.trim();
 
+  const btn = $("rsvpBtn");
+  btn.classList.add("loading");
+
+  let saved = false;
+
   // 1) Coba POST ke Google Sheets
   if (RSVP_API) {
     try {
@@ -311,31 +342,38 @@ $("rsvpForm").addEventListener("submit", async e => {
         body: JSON.stringify({ nama, hadir: status ? "yes" : "no", jumlah, ucapan, hp }),
       });
       const j = await r.json();
-      if (j && j.ok) {
-        $("rsvpForm").reset();
-        $("rsvpSuccess").hidden = false;
-        setTimeout(() => { $("rsvpSuccess").hidden = true; }, 6000);
-        return;
-      }
-      $("err").textContent = "Server error, opening WhatsApp as backup.";
-    } catch (_) {
-      $("err").textContent = "Network error, opening WhatsApp as backup.";
-    }
+      if (j && j.ok) saved = true;
+    } catch (_) { /* fallback WA */ }
   }
 
   // 2) Fallback: WhatsApp
-  if (!RSVP_WA) { $("err").textContent = "No contact configured."; return; }
-  const msg =
-    `Hello, I am ${nama}.\nAttendance: ${status ? "Attending" : "Not attending"}\nGuests: ${jumlah}` +
-    (ucapan ? `\nGreeting: ${ucapan}` : "") +
-    (hp ? `\nHP: ${hp}` : "") +
-    `\n\n(Rahmah & Adhit Engagement, 15 November 2026)`;
-  setTimeout(() => {
+  if (!saved && RSVP_WA) {
+    const msg =
+      `Hello, I am ${nama}\nAttendance: ${status ? "Attending" : "Not attending"}\nGuests: ${jumlah}` +
+      (ucapan ? `\nGreeting: ${ucapan}` : "") +
+      (hp ? `\nHP: ${hp}` : "") +
+      `\n\n(Rahmah & Adhit Engagement, 15 November 2026)`;
     window.open(`https://wa.me/${RSVP_WA}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
-    $("rsvpForm").reset();
-    $("rsvpSuccess").hidden = false;
-    setTimeout(() => { $("rsvpSuccess").hidden = true; }, 6000);
-  }, 800);
+  }
+  if (!saved && !RSVP_WA) { $("err").textContent = "Could not send your RSVP. Please try again."; btn.classList.remove("loading"); return; }
+
+  btn.classList.remove("loading");
+
+  // Tampilkan panel konfirmasi
+  $("rsvpForm").reset();
+  $("doneMsg").textContent = saved
+    ? "Your RSVP has been saved. We will see you there!"
+    : "Your RSVP was sent via WhatsApp. Thank you!";
+  $("rsvpForm").classList.add("done-hide");
+  $("rsvpDone").hidden = false;
+  $("rsvpDone").scrollIntoView({ behavior: "smooth", block: "center" });
+});
+
+$("rsvpAgain").addEventListener("click", () => {
+  $("rsvpDone").hidden = true;
+  $("rsvpForm").classList.remove("done-hide");
+  $("err").textContent = "";
+  $("nama").focus();
 });
 
 window.addEventListener("scroll", () => {
