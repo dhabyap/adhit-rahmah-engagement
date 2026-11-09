@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Undangan Lamaran Rahmah &amp; Adhit</title>
-<meta property="og:title" content="Undangan Lamaran Rahmah & Adhit">
-<meta property="og:description" content="Minggu, 15 November 2026 · Nuujii Resto & Coffee, Bandung">
+<title>Engagement Invitation — Rahmah &amp; Adhit</title>
+<meta property="og:title" content="Engagement Invitation — Rahmah & Adhit">
+<meta property="og:description" content="Sunday, 15 November 2026 · Nuujii Resto & Coffee, Bandung">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="assets/favicon.png">
@@ -150,11 +150,11 @@ footer .n{font:400 2rem var(--script);margin-top:14px}
   <div class="half l"></div><div class="half r"></div>
   <svg class="fr" preserveAspectRatio="none"><rect x="0" y="0" width="100%" height="100%" pathLength="1"/></svg>
   <div class="box page-transition">
-    <p class="small">Undangan Lamaran</p>
+    <p class="small">Engagement Invitation</p>
     <div class="mono" aria-hidden="true"><img src="assets/monogram-bronze.png" alt="" width="106" height="152" decoding="async"></div>
     <h1>Rahmah &amp; Adhit</h1>
-    <p class="tamu" id="tamu" hidden>Kepada Yth.<b id="namaTamu"></b></p>
-    <button class="btn" id="open" type="button">Buka Undangan</button>
+    <p class="tamu" id="tamu" hidden>To: <b id="namaTamu"></b></p>
+    <button class="btn" id="open" type="button">Open Invitation</button>
   </div>
 </div>
 <div id="petals" aria-hidden="true"></div>
@@ -163,7 +163,7 @@ footer .n{font:400 2rem var(--script);margin-top:14px}
   <!-- HERO -->
   <header class="hero" id="hero" style="text-align:center">
     <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div>
-    <p class="small">Undangan Lamaran</p>
+    <p class="small">Engagement Invitation</p>
     <i class="rule"></i>
     <h1 style="font-weight:400"><span class="name" data-t="Rahmah"></span><span class="amp">&amp;</span><span class="name" data-t="Adhit" data-o="1.5"></span></h1>
     <p class="date">15 · 11 · 2026</p>
@@ -171,7 +171,7 @@ footer .n{font:400 2rem var(--script);margin-top:14px}
   </header>
 
   <section id="pembuka">
-    <p class="rv">Dengan penuh rasa syukur, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan berbagi kebahagiaan di acara lamaran kami.</p>
+    <p class="rv">With heartfelt gratitude, we invite you to join us and share the happiness of our engagement ceremony.</p>
   </section>
 
   <section class="pink" id="mempelai">
@@ -208,21 +208,21 @@ footer .n{font:400 2rem var(--script);margin-top:14px}
   </section>
 
   <section id="rsvp">
-    <h2 class="rv">Konfirmasi Kehadiran</h2>
-    <p class="rv d1">Mohon konfirmasi kehadiran Anda agar kami dapat mempersiapkan acara dengan baik.</p>
+    <h2 class="rv">RSVP</h2>
+    <p class="rv d1">Please confirm your attendance so we can prepare the event well.</p>
     <form id="rsvpForm" class="rv d2" novalidate>
-      <label for="nama">Nama</label><input id="nama" autocomplete="name" required>
-      <label for="status">Konfirmasi</label><select id="status"><option>Hadir</option><option>Tidak hadir</option></select>
-      <label for="jumlah">Jumlah tamu</label><input id="jumlah" type="number" min="1" max="10" value="1">
-      <label for="ucapan">Ucapan (opsional)</label><textarea id="ucapan"></textarea>
+      <label for="nama">Name</label><input id="nama" autocomplete="name" required>
+      <label for="status">RSVP</label><select id="status"><option>Attending</option><option>Not attending</option></select>
+      <label for="jumlah">Number of guests</label><input id="jumlah" type="number" min="1" max="10" value="1">
+      <label for="ucapan">Greeting (optional)</label><textarea id="ucapan"></textarea>
       <p class="err" id="err" role="alert"></p>
-      <button class="btn" type="submit">Kirim via WhatsApp</button>
-      <div class="success" id="rsvpSuccess" hidden>Terima kasih, konfirmasi telah dikirim.</div>
+      <button class="btn" type="submit">Send via WhatsApp</button>
+      <div class="success" id="rsvpSuccess" hidden>Thank you, your confirmation has been sent.</div>
     </form>
   </section>
 
   <footer>
-    <p class="rv">Merupakan kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terima kasih.</p>
+    <p class="rv">It would be an honour and joy to have you with us. Thank you.</p>
     <p class="n rv d1">Rahmah &amp; Adhit</p>
   </footer>
 </div>
@@ -288,11 +288,11 @@ tick(); setInterval(tick, 1000);
 $("rsvpForm").addEventListener("submit", e => {
   e.preventDefault();
   const nama = $("nama").value.trim();
-  if (!nama) { $("err").textContent = "Nama wajib diisi."; $("nama").focus(); return; }
-  if (!RSVP_WA) { $("err").textContent = "Nomor WhatsApp RSVP belum diatur."; return; }
+  if (!nama) { $("err").textContent = "Name is required."; $("nama").focus(); return; }
+  if (!RSVP_WA) { $("err").textContent = "WhatsApp contact not set."; return; }
   $("err").textContent = "";
   const u = $("ucapan").value.trim();
-  const msg = `Halo, saya ${nama}.\nKonfirmasi: ${$("status").value}\nJumlah tamu: ${$("jumlah").value}` + (u ? `\nUcapan: ${u}` : "") + `\n\n(Undangan lamaran Rahmah & Adhit, 15 November 2026)`;
+  const msg = `Hello, I am ${nama}.\nAttendance: ${$("status").value}\nGuests: ${$("jumlah").value}` + (u ? `\nGreeting: ${u}` : "") + `\n\n(Rahmah & Adhit Engagement, 15 November 2026)`;
   window.open(`https://wa.me/${RSVP_WA}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
   $("rsvpForm").reset();
   $("rsvpSuccess").hidden = false;
